@@ -1,0 +1,18 @@
+.ball {
+  border-radius: 50%;
+  height: 11rem;
+  width: 11rem;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  color: ivory;
+}
+
+.ball h2,
+.ball p {
+  margin: 0;
+}
+
+.ball h2 {
+  font-size: 1.2rem;
+}

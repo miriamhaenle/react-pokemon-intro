@@ -1,8 +1,10 @@
-import './App.css';
+import { useState } from 'react';
 import Card from './Card';
+import Pokeball from './Pokeball';
+import './App.css';
 
 function App() {
-  const pokemon = [
+  const initialPokemon = [
     { name: 'Pikachu', type: 'Elektro' },
     { name: 'Glumanda', type: 'Feuer' },
     { name: 'Bisasam', type: 'Pflanze' },
@@ -13,11 +15,37 @@ function App() {
     { name: 'Pummeluff', type: 'Fee' },
   ];
 
+  const [pokemon, setPokemon] = useState(initialPokemon);
+  const [pokedex, setPokedex] = useState([]);
+
+  function placeIntoPokedex(name) {
+    const pokemonToAdd = pokemon.find((pokemon) => pokemon.name === name);
+    setPokedex([pokemonToAdd, ...pokedex]);
+    removePokemon(name);
+  }
+
+  function removePokemon(name) {
+    const updatedPokeMons = pokemon.filter((pokemon) => pokemon.name !== name);
+    setPokemon([...updatedPokeMons]);
+  }
+
   return (
-    <div className="App">
-      <h1>Pokemon</h1>
+    <div>
+      <h1>Pokemon App</h1>
+      <section>
+        <h2>My Pokeball or dex (basically where I store the one's I caught</h2>
+        <div className="flexbox">
+          {pokedex.map((pokemon) => (
+            <Pokeball name={pokemon.name} type={pokemon.type} />
+          ))}
+        </div>
+      </section>
       {pokemon.map((pokemon) => (
-        <Card name={pokemon.name} type={pokemon.type} />
+        <Card
+          name={pokemon.name}
+          type={pokemon.type}
+          onPlaceIntoPokedex={placeIntoPokedex}
+        />
       ))}
     </div>
   );
