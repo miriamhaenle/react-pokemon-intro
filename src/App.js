@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Card from './Card';
 import Pokeball from './Pokeball';
+import PokeballHeader from './PokeballHeader';
 import './App.css';
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
     <div>
       <h1>Pokemon App</h1>
       <section>
-        <h2>My Pokeball</h2>
+        <PokeballHeader count={pokedex.length} />
         <div className="flexbox">
           {pokedex.map((pokemon) => (
             <Pokeball
