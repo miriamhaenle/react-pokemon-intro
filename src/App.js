@@ -19,23 +19,30 @@ function App() {
   const [pokemon, setPokemon] = useState(initialPokemon);
   const [pokedex, setPokedex] = useState([]);
 
+  const findPokemon = (pokemon, name) =>
+    pokemon.find((pokemon) => pokemon.name === name);
+
+  const filterPokemon = (pokemon, name) =>
+    pokemon.filter((pokemon) => pokemon.name !== name);
+
   function placeIntoPokedex(name) {
-    const pokemonToAdd = pokemon.find((pokemon) => pokemon.name === name);
+    const pokemonToAdd = findPokemon(pokemon, name);
     setPokedex([pokemonToAdd, ...pokedex]);
-    removePokemon(name);
+    removePokemon(pokemon, name, setPokemon);
   }
 
-  function removePokemon(name) {
-    const updatedPokemons = pokemon.filter((pokemon) => pokemon.name !== name);
-    setPokemon([...updatedPokemons]);
+  function removePokemon(pokemon, name, updateStateFunc) {
+    const updatedPokemons = filterPokemon(pokemon, name);
+    updateStateFunc([...updatedPokemons]);
   }
 
   function setFree(name) {
-    const pokemonsToKeep = pokedex.filter((pokemon) => pokemon.name !== name);
-    setPokedex([...pokemonsToKeep]);
-    const pokemonToAdd = pokedex.find((pokemon) => pokemon.name === name);
-    setPokemon([...pokemon, pokemonToAdd]);
+    removePokemon(pokedex, name, setPokedex);
+
+    const pokemonToAdd = findPokemon(pokedex, name);
+    setPokemon([pokemonToAdd, ...pokemon]);
   }
+
   return (
     <div>
       <h1>Pokemon App</h1>
