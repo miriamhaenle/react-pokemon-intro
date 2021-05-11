@@ -25,18 +25,28 @@ function App() {
   }
 
   function removePokemon(name) {
-    const updatedPokeMons = pokemon.filter((pokemon) => pokemon.name !== name);
-    setPokemon([...updatedPokeMons]);
+    const updatedPokemons = pokemon.filter((pokemon) => pokemon.name !== name);
+    setPokemon([...updatedPokemons]);
   }
 
+  function setFree(name) {
+    const pokemonsToKeep = pokedex.filter((pokemon) => pokemon.name !== name);
+    setPokedex([...pokemonsToKeep]);
+    const pokemonToAdd = pokedex.find((pokemon) => pokemon.name === name);
+    setPokemon([...pokemon, pokemonToAdd]);
+  }
   return (
     <div>
       <h1>Pokemon App</h1>
       <section>
-        <h2>My Pokeball or dex (basically where I store the one's I caught</h2>
+        <h2>My Pokeball</h2>
         <div className="flexbox">
           {pokedex.map((pokemon) => (
-            <Pokeball name={pokemon.name} type={pokemon.type} />
+            <Pokeball
+              name={pokemon.name}
+              type={pokemon.type}
+              onSetFree={setFree}
+            />
           ))}
         </div>
       </section>

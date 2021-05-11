@@ -5,7 +5,7 @@
   display: grid;
   place-items: center;
   padding: 1rem;
-  color: ivory;
+  border: 0.5rem dotted transparent;
 }
 
 .ball h2,
@@ -15,4 +15,14 @@
 
 .ball h2 {
   font-size: 1.2rem;
+}
+
+.ball button {
+  background: none;
+  font-size: 2rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  border-color: white;
+  cursor: pointer;
 }
