@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Card from './Card';
 import Pokeball from './Pokeball';
 import PokeballHeader from './PokeballHeader';
-import './App.css';
 
 function App() {
   const initialPokemon = [

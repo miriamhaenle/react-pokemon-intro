@@ -1,7 +1,5 @@
 import styled from 'styled-components/macro';
 import getColor from './lib/colors';
-
-//import './Card.css';
 import Pokeball from './images/pokeball.svg';
 
 export default function Card(props) {
