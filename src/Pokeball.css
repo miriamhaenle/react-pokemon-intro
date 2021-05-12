@@ -1,11 +1,11 @@
 .ball {
   border-radius: 50%;
-  height: 11rem;
-  width: 11rem;
+  color: ivory;
+  height: 10rem;
+  width: 10rem;
   display: grid;
   place-items: center;
   padding: 1rem;
-  border: 0.5rem dotted transparent;
 }
 
 .ball h2,
@@ -14,7 +14,11 @@
 }
 
 .ball h2 {
-  font-size: 1.2rem;
+  font-size: 1rem;
+}
+
+.ball p {
+  font-size: 0.9rem;
 }
 
 .ball button {
@@ -29,4 +33,20 @@
 
 .ball button:hover {
   font-size: 2.3rem;
+}
+
+.colorfulShadow {
+  position: relative;
+}
+
+.colorfulShadow::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: inherit;
+  background-position: center center;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5)) blur(8px);
+  z-index: -1;
+  border-radius: 50%;
 }

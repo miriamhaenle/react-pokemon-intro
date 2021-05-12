@@ -2,7 +2,9 @@ import { useState } from 'react';
 import Card from './Card';
 import Pokeball from './Pokeball';
 import PokeballHeader from './PokeballHeader';
+import Header from './Header';
 import './App.css';
+import ProfEich from './ProfEich';
 
 function App() {
   const initialPokemon = [
@@ -18,6 +20,7 @@ function App() {
 
   const [pokemon, setPokemon] = useState(initialPokemon);
   const [pokedex, setPokedex] = useState([]);
+  const [profEichDex, setProfiEichSet] = useState([]);
 
   const findPokemon = (pokemon, name) =>
     pokemon.find((pokemon) => pokemon.name === name);
@@ -27,7 +30,11 @@ function App() {
 
   function placeIntoPokedex(name) {
     const pokemonToAdd = findPokemon(pokemon, name);
-    setPokedex([pokemonToAdd, ...pokedex]);
+    if (pokedex.length < 6) {
+      setPokedex([pokemonToAdd, ...pokedex]);
+    } else {
+      setProfiEichSet([pokemonToAdd, ...profEichDex]);
+    }
     removePokemon(pokemon, name, setPokemon);
   }
 
@@ -36,7 +43,10 @@ function App() {
     updateStateFunc([...updatedPokemons]);
   }
 
-  function setFree(name) {
+  function setFree(name, profEich = false) {
+    if (profEich) {
+      removePokemon(profEichDex, name, setProfiEichSet);
+    }
     removePokemon(pokedex, name, setPokedex);
 
     const pokemonToAdd = findPokemon(pokedex, name);
@@ -45,10 +55,17 @@ function App() {
 
   return (
     <div>
-      <h1>Pokemon App</h1>
+      <Header />
+      {profEichDex.length > 0 && (
+        <ProfEich
+          pokemon={profEichDex}
+          count={profEichDex.length}
+          onSetFree={setFree}
+        />
+      )}
       <section>
         <PokeballHeader count={pokedex.length} />
-        <div className="flexbox">
+        <div className="flexbox pokeball">
           {pokedex.map((pokemon) => (
             <Pokeball
               name={pokemon.name}
@@ -58,13 +75,18 @@ function App() {
           ))}
         </div>
       </section>
-      {pokemon.map((pokemon) => (
-        <Card
-          name={pokemon.name}
-          type={pokemon.type}
-          onPlaceIntoPokedex={placeIntoPokedex}
-        />
-      ))}
+      <section>
+        <h3>Pokémon in the wild</h3>
+        <div className="grid">
+          {pokemon.map((pokemon) => (
+            <Card
+              name={pokemon.name}
+              type={pokemon.type}
+              onPlaceIntoPokedex={placeIntoPokedex}
+            />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
