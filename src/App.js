@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Card from './Card';
 import Pokeball from './Pokeball';
 import PokeballHeader from './PokeballHeader';
@@ -22,6 +22,8 @@ function App() {
   const [pokedex, setPokedex] = useState([]);
   const [profEichDex, setProfiEichSet] = useState([]);
 
+  useEffect(() => {}, [pokemon]);
+
   const findPokemon = (pokemon, name) =>
     pokemon.find((pokemon) => pokemon.name === name);
 
@@ -38,20 +40,23 @@ function App() {
     removePokemon(pokemon, name, setPokemon);
   }
 
-  function removePokemon(pokemon, name, updateStateFunc) {
-    const updatedPokemons = filterPokemon(pokemon, name);
-    updateStateFunc([...updatedPokemons]);
+  function removePokemon(pokemons, name, updateStateFunc) {
+    const updatedPokemons = filterPokemon(pokemons, name);
+    updateStateFunc(updatedPokemons);
   }
 
-  function setFree(name, profEich = false) {
-    if (profEich) {
-      removePokemon(profEichDex, name, setProfiEichSet);
-      const pokemonToAdd = findPokemon(pokedex, name);
-    }
-    removePokemon(pokedex, name, setPokedex);
-
-    const pokemonToAdd = findPokemon(pokedex, name);
+  function updatePokemons(pokemons, name) {
+    const pokemonToAdd = findPokemon(pokemons, name);
     setPokemon([pokemonToAdd, ...pokemon]);
+  }
+
+  function setFree(pokemons, name, updateStateFunc) {
+    removePokemon(pokemons, name, updateStateFunc);
+    updatePokemons(pokemons, name);
+  }
+
+  function setEichFree(pokemons, name) {
+    setFree(pokemons, name, setProfiEichSet);
   }
 
   return (
@@ -59,9 +64,10 @@ function App() {
       <Header />
       {profEichDex.length > 0 && (
         <ProfEich
-          pokemon={profEichDex}
+          pokemons={profEichDex}
           count={profEichDex.length}
           onSetFree={setFree}
+          updatePokemons={setProfiEichSet}
         />
       )}
       <section>
@@ -72,6 +78,8 @@ function App() {
               name={pokemon.name}
               type={pokemon.type}
               onSetFree={setFree}
+              pokemons={pokedex}
+              updatePokemons={setPokedex}
             />
           ))}
         </div>
