@@ -46,6 +46,7 @@ function App() {
   function setFree(name, profEich = false) {
     if (profEich) {
       removePokemon(profEichDex, name, setProfiEichSet);
+      const pokemonToAdd = findPokemon(pokedex, name);
     }
     removePokemon(pokedex, name, setPokedex);
 
