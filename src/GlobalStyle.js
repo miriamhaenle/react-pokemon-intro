@@ -1,10 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
+import pokemonHollow from './assets/PokemonHollow.ttf'
 
 export default createGlobalStyle`
 
   @font-face {
     font-family: 'PokemonHollow';
-    src: url('./assets/PokemonHollow.ttf') format('truetype');
+    src: url(${pokemonHollow}) format('truetype');
   }
 
   * {
@@ -19,7 +20,7 @@ export default createGlobalStyle`
     background: hsl(44, 92%, 55%);
   }
 
-  h1 {
+  h2 {
     font-family: 'PokemonHollow';
   }
 
