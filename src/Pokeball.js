@@ -1,20 +1,12 @@
 import styled from 'styled-components/macro';
 import getColor from './lib/colors';
 
-export default function Pokeball({
-  name,
-  type,
-  onSetFree,
-  pokemons,
-  updatePokemons,
-}) {
+export default function Pokeball({ name, type, onSetFree, pokemons }) {
   return (
     <Ball className="ball" style={{ borderColor: getColor(type) }}>
       <h2>{name}</h2>
       <p>{type}</p>
-      <button onClick={() => onSetFree(pokemons, name, updatePokemons)}>
-        🏜
-      </button>
+      <button onClick={() => onSetFree(pokemons, name)}>🏜</button>
     </Ball>
   );
 }

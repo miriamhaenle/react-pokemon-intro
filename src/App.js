@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import styled from 'styled-components';
 import Card from './Card';
 import Pokeball from './Pokeball';
 import PokeballHeader from './PokeballHeader';
 import Header from './Header';
-import './App.css';
 import ProfEich from './ProfEich';
 
 function App() {
@@ -16,13 +16,15 @@ function App() {
     { name: 'Smettbo', type: 'Elektro' },
     { name: 'Vulpix', type: 'Feuer' },
     { name: 'Pummeluff', type: 'Fee' },
+    { name: 'Turtok', type: 'Wasser' },
+    { name: 'Piepi', type: 'Fee' },
+    { name: 'Bluzuk', type: 'Käfer' },
+    { name: 'Abra', type: 'Psycho' },
   ];
 
   const [pokemon, setPokemon] = useState(initialPokemon);
   const [pokedex, setPokedex] = useState([]);
-  const [profEichDex, setProfiEichSet] = useState([]);
-
-  useEffect(() => {}, [pokemon]);
+  const [pokemonWithProfEich, setPokemonWithProfEich] = useState([]);
 
   const findPokemon = (pokemon, name) =>
     pokemon.find((pokemon) => pokemon.name === name);
@@ -35,7 +37,7 @@ function App() {
     if (pokedex.length < 6) {
       setPokedex([pokemonToAdd, ...pokedex]);
     } else {
-      setProfiEichSet([pokemonToAdd, ...profEichDex]);
+      setPokemonWithProfEich([pokemonToAdd, ...pokemonWithProfEich]);
     }
     removePokemon(pokemon, name, setPokemon);
   }
@@ -55,38 +57,36 @@ function App() {
     updatePokemons(pokemons, name);
   }
 
-  function setEichFree(pokemons, name) {
-    setFree(pokemons, name, setProfiEichSet);
+  function setFreeFactory(updateStateFunc) {
+    return (pokemons, name) => setFree(pokemons, name, updateStateFunc);
   }
 
   return (
     <div>
       <Header />
-      {profEichDex.length > 0 && (
+      {pokemonWithProfEich.length > 0 && (
         <ProfEich
-          pokemons={profEichDex}
-          count={profEichDex.length}
-          onSetFree={setFree}
-          updatePokemons={setProfiEichSet}
+          pokemons={pokemonWithProfEich}
+          count={pokemonWithProfEich.length}
+          onSetFree={setFreeFactory(setPokemonWithProfEich)}
         />
       )}
       <section>
         <PokeballHeader count={pokedex.length} />
-        <div className="flexbox pokeball">
+        <PokeballContainer>
           {pokedex.map((pokemon) => (
             <Pokeball
               name={pokemon.name}
               type={pokemon.type}
-              onSetFree={setFree}
+              onSetFree={setFreeFactory(setPokedex)}
               pokemons={pokedex}
-              updatePokemons={setPokedex}
             />
           ))}
-        </div>
+        </PokeballContainer>
       </section>
       <section>
         <h3>Pokémon in the wild</h3>
-        <div className="grid">
+        <Pokemon>
           {pokemon.map((pokemon) => (
             <Card
               name={pokemon.name}
@@ -94,10 +94,22 @@ function App() {
               onPlaceIntoPokedex={placeIntoPokedex}
             />
           ))}
-        </div>
+        </Pokemon>
       </section>
     </div>
   );
 }
 
 export default App;
+
+const PokeballContainer = styled.article`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-start;
+`;
+
+const Pokemon = styled.article`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+`;

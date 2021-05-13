@@ -17,7 +17,7 @@ export default function ProfEich({
           <Pokeball
             name={pokemon.name}
             type={pokemon.type}
-            onSetFree={() => onSetFree(pokemons, pokemon.name, updatePokemons)}
+            onSetFree={() => onSetFree(pokemons, pokemon.name)}
           />
         ))}
       </div>
