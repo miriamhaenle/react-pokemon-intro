@@ -3,7 +3,7 @@ import getColor from './lib/colors';
 
 export default function Pokeball({ name, type, onSetFree, pokemons }) {
   return (
-    <Ball className="ball" style={{ borderColor: getColor(type) }}>
+    <Ball background={getColor(type)}>
       <h2>{name}</h2>
       <p>{type}</p>
       <button onClick={() => onSetFree(pokemons, name)}>🏜</button>
@@ -18,7 +18,7 @@ const Ball = styled.article`
   display: grid;
   place-items: center;
   padding: 1rem;
-  border: 0.5rem dotted transparent;
+  background: ${(props) => props.background};
 
   h2,
   p {

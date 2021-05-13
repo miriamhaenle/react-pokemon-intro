@@ -16,11 +16,11 @@ export default createGlobalStyle`
     font-size: 1.125rem;
     margin: 0;
 
-    background: hsl(44, 92%, 55%);
+    background: #f6e652;
   }
 
-  h1 {
-    font-family: 'PokemonHollow';
+  h1, h2 {
+    font-family: 'PokemonHollow', sans-serif;
   }
 
  

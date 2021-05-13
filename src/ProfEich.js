@@ -1,5 +1,5 @@
+import styled from 'styled-components';
 import portraitEich from './images/profeich.png';
-import './ProfEich.css';
 import Pokeball from './Pokeball';
 
 export default function ProfEich({
@@ -9,9 +9,9 @@ export default function ProfEich({
   updatePokemons,
 }) {
   return (
-    <section className="profEich">
+    <Container>
       <h2>Pokémon with Professor Eich ({count})</h2>
-      <div className="flexbox">
+      <div>
         <img src={portraitEich} alt="Prof Eich holding a device" width="60" />
         {pokemons.map((pokemon, _, pokemons) => (
           <Pokeball
@@ -21,6 +21,18 @@ export default function ProfEich({
           />
         ))}
       </div>
-    </section>
+    </Container>
   );
 }
+
+const Container = styled.section`
+  border-bottom: 0.2rem solid sandybrown;
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+`;
